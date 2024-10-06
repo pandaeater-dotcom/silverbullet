@@ -39,7 +39,7 @@ public:
   void readJPEG();
   void writeJPEG(int) const;
   void readPNG();
-  void writePNG();
+  void writePNG() const;
 
   void execute(const vector<string> &args) override;
   string getDescription() const override;
