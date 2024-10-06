@@ -6,6 +6,9 @@
 #include <string>
 
 using namespace std;
+
+enum FileMode { READ, WRITE };
+
 class ITool {
 public:
     virtual ~ITool() = default;

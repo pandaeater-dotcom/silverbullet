@@ -1,13 +1,14 @@
 // image_tool.h
 #include "itool.h"
 #include <csetjmp>
+#include <filesystem>
+#include <iostream>
 #include <jpeglib.h>
 #include <png.h>
 #include <pngconf.h>
 #include <vector>
-#include <iostream>
 
-enum FileMode { READ, WRITE };
+enum ImgFormat { JPEG, PNG };
 
 void JPEGErrorExit(j_common_ptr);
 void PNGErrorExit(png_structp png, png_const_charp err_msg);
@@ -18,41 +19,28 @@ struct JPEGErrorHandler {
 };
 
 class ImageTool : public ITool {
-protected:
+private:
+  bool determineType(string, ImgFormat *);
+
   string inputFilePath;
   string outputDir;
   unsigned int width, height, channels;
   int bitDepth;
+  ImgFormat inputFormat;
+  ImgFormat outputFormat;
+  vector<unsigned short> imageData;
 
   FILE *openFile(string, FileMode) const;
 
 public:
-  ImageTool(string inputFilePath, string outputDir);
-  ImageTool(string inputFilePath);
+  ImageTool(string, string);
+  ImageTool(string, string, string);
 
-  virtual ~ImageTool() = default;
-
-  virtual void readJPEG() = 0;
-  virtual void writeJPEG(int) const = 0;
-  virtual void readPNG() = 0;
-  virtual void writePNG() const = 0;
+  void readJPEG();
+  void writeJPEG(int) const;
+  void readPNG();
+  void writePNG();
 
   void execute(const vector<string> &args) override;
   string getDescription() const override;
 };
-
-class Image8Bit : public ImageTool {
-private:
-  vector<unsigned char> imageData;
-
-public:
-  Image8Bit(string inputFilePath, string outputDir);
-  Image8Bit(string inputFilePath);
-
-  void readJPEG() override;
-  void writeJPEG(int) const override;
-  void readPNG() override;
-  void writePNG() const override;
-};
-
-

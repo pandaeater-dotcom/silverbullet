@@ -2,7 +2,7 @@
 CXX = g++
 
 # Compiler flags
-CXXFLAGS = -std=c++11 -Wall -Wextra -pedantic
+CXXFLAGS = -std=c++23 -Wall -Wextra -pedantic
 
 # Include paths
 INCLUDES = -I/usr/include
@@ -11,7 +11,7 @@ INCLUDES = -I/usr/include
 LIBS = -ljpeg -lpng
 
 # Source files
-SOURCES = silverbullet.cc image_tool.cc main.cc image8bit.cc
+SOURCES = silverbullet.cc image_tool.cc main.cc
 
 # Object files
 OBJECTS = $(SOURCES:.cc=.o)
@@ -40,5 +40,4 @@ clean:
 # Dependencies
 silverbullet.o: silverbullet.cc silverbullet.h itool.h image_tool.h
 image_tool.o: image_tool.cc image_tool.h itool.h
-image8bit.o: image8bit.cc image_tool.h
 main.o: main.cc silverbullet.h

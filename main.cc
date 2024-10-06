@@ -3,10 +3,10 @@
 
 
 int main(int argc, char* argv[]) {
-    //ImageTool processor("sample/neil-and-zulma-scott-pHztxoXCvAw-unsplash.jpg");
-    Image8Bit processor("sample/PNG_transparency_demonstration_1.png");
-    processor.readPNG();
-    processor.writePNG();
+    ImageTool processor("sample/neil-and-zulma-scott-pHztxoXCvAw-unsplash.jpg", "JPG");
+    //ImageTool processor("sample/PNG_transparency_demonstration_1.png", "PNG");
     //processor.readPNG();
-    //processor.writeJPEG(100);
+    //processor.writePNG();
+    processor.readJPEG();
+    processor.writeJPEG(100);
 }

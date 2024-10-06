@@ -1,12 +1,26 @@
 // image_tool.cc
 #include "image_tool.h"
+#include <unordered_set>
 
-ImageTool::ImageTool(string inputPath) : inputFilePath{inputPath} {
-  ImageTool::outputDir = inputPath.substr(0, inputPath.find_last_of('/') + 1);
+namespace fs = filesystem;
+
+ImageTool::ImageTool(string inputPath, string outputType) : inputFilePath{inputPath} {
+  if (!fs::is_regular_file(inputPath)) {
+    throw;
+  }
+  determineType(fs::path(inputFilePath).extension().string(), &inputFormat);
+  outputDir = inputPath.substr(0, inputPath.find_last_of('/') + 1);
+  determineType(outputType, &outputFormat); 
 }
 
-ImageTool::ImageTool(string inputPath, string outputPath)
-    : inputFilePath{inputPath}, outputDir(outputPath) {}
+ImageTool::ImageTool(string inputPath, string outputPath, string outputType)
+    : inputFilePath{inputPath}, outputDir(outputPath) {
+  if (!fs::is_regular_file(inputPath)) {
+    throw;
+  }
+  determineType(fs::path(inputFilePath).extension().string(), &inputFormat);
+  determineType(outputType, &outputFormat);
+}
 
 FILE *ImageTool::openFile(string filePath, FileMode fileMode) const {
   string mode = fileMode == READ ? "rb" : "wb";
@@ -51,3 +65,17 @@ void ImageTool::execute(const vector<string> &args) {
 string ImageTool::getDescription() const {
   return "ImageTool for handling JPEG files.";
 }
+
+bool ImageTool::determineType(string format, ImgFormat* var) {
+  unordered_set<string> validJPEG = {"jpeg", "jpg", ".jpeg", ".jpg", "JPEG", ".JPG"};
+  unordered_set<string> validPNG = {"PNG", "png", ".png"};
+  if (validJPEG.find(format) != validJPEG.end()) {
+    *var = JPEG;
+  } else if (validPNG.find(format) != validPNG.end()) {
+    *var = PNG;
+  } else {
+    return false;
+  }
+  return true;
+}
+
