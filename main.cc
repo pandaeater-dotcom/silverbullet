@@ -9,6 +9,8 @@ int main(int argc, char *argv[]) {
   // processor.writePNG();
   //processor.readJPEG();
   processor.writeJPEG(100);
-  AudioTool atool("sample/sample-6s.mp3", "MP3");
+  AudioTool atool("sample/gs-16b-1c-44100hz.mp3", "WAV");
   atool.readMP3();
+  //atool.writeMP3();
+  atool.writeWAV();
 }
