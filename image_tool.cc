@@ -8,7 +8,6 @@ namespace fs = filesystem;
 ImageTool::ImageTool(string inputPath, string outputType)
     : inputFilePath{inputPath} {
   if (!fs::is_regular_file(fs::path(inputPath))) {
-    cout << "haa" << endl; 
     throw;
   }
   determineType(fs::path(inputFilePath).extension().string(), &inputFormat);
@@ -109,7 +108,6 @@ void ImageTool::readJPEG() {
   width = cinfo.output_width;
   height = cinfo.output_height;
   channels = cinfo.output_components;
-  cout << "here" << endl;
 
   imageData.resize(height * width * channels);
 
@@ -148,10 +146,8 @@ void ImageTool::writeJPEG(int quality) const {
   cinfo.image_height = height;
   cinfo.input_components = channels;
   cinfo.in_color_space = channels == 3 ? JCS_RGB : JCS_EXT_RGBA;
-  cout << "num channels: " << channels << endl;
   jpeg_set_defaults(&cinfo);
   jpeg_set_quality(&cinfo, quality, TRUE);
-  cout << "here" << endl;
   jpeg_start_compress(&cinfo, TRUE);
   while (cinfo.next_scanline < height) {
     JSAMPROW rowPtr =

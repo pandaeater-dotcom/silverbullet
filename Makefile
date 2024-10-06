@@ -8,10 +8,10 @@ CXXFLAGS = -std=c++23 -Wall -Wextra -pedantic
 INCLUDES = -I/usr/include
 
 # Libraries
-LIBS = -ljpeg -lpng -lmpg123
+LIBS = -ljpeg -lpng -lmpg123 -lmp3lame
 
 # Source files
-SOURCES = silverbullet.cc image_tool.cc main.cc
+SOURCES = silverbullet.cc image_tool.cc main.cc audio_tool.cc
 
 # Object files
 OBJECTS = $(SOURCES:.cc=.o)
@@ -41,3 +41,4 @@ clean:
 silverbullet.o: silverbullet.cc silverbullet.h itool.h image_tool.h
 image_tool.o: image_tool.cc image_tool.h itool.h
 main.o: main.cc silverbullet.h
+audio_tool.o: audio_tool.cc audio_tool.h itool.h
