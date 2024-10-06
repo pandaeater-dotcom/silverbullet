@@ -8,7 +8,7 @@ CXXFLAGS = -std=c++23 -Wall -Wextra -pedantic
 INCLUDES = -I/usr/include
 
 # Libraries
-LIBS = -ljpeg -lpng
+LIBS = -ljpeg -lpng -lmpg123
 
 # Source files
 SOURCES = silverbullet.cc image_tool.cc main.cc

@@ -1,6 +1,7 @@
 // audio_tool.h
-
 #include "itool.h"
+#include <filesystem>
+
 enum AudFormat {
   MP3,
   WAV
@@ -13,8 +14,8 @@ private:
   AudFormat inputFormat;
   AudFormat outputFormat;
 
-  vector<float> audioData;
-
+  vector<unsigned char> audioData;
+  void determineType(string, AudFormat*);
 public:
   AudioTool(string, string);
   AudioTool(string, string, string);
